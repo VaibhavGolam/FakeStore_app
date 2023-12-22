@@ -18,9 +18,9 @@
     final FirebaseAuthService _auth = FirebaseAuthService();
 
     //controllers
-     TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordFirstController = TextEditingController();
-     TextEditingController _passwordController = TextEditingController();
+     final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _passwordFirstController = TextEditingController();
+     final TextEditingController _passwordController = TextEditingController();
 
     //to avoid memory leak
     @override

@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 child: TextField(
                   controller: _emailController,
-                  style: TextStyle(color: Colors.blue),
+                  style:const TextStyle(color: Colors.blue),
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person, color: Colors.blue),
                     labelText: 'Enter email',

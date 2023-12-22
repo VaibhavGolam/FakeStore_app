@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:e_commerce_app/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -47,24 +49,20 @@ class ItemListPageState extends State<ItemListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //appbar
       appBar: AppBar(
         title: const Text('Product List'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              // Logout logic goes here
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
       ),
+
+      //drawer
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
+            //blue drawer header
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                  color: Colors.blue,
               ),
               child: Text(
                 'Hello user!',
@@ -74,40 +72,68 @@ class ItemListPageState extends State<ItemListPage> {
                 ),
               ),
             ),
+
+            //logout button
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               onTap: () {
                 // Logout logic goes here
+                FirebaseAuth.instance.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const MyHomePage()), // Replace LoginPage() with your login page
+                );
               },
             ),
+
+            //gap between
             const SizedBox(height: 30),
+
+            //Divider
             const Divider(
-              color: Colors.grey,
+              color: Colors.black,
               thickness: 1,
               indent: 20,
               endIndent: 20,
             ),
+
+            //Made by Vaibhav Text
             const Center(
               child: Text(
                 'Made by Vaibhav Golam',
+                style: TextStyle(fontSize: 18),
               ),
             ),
 
-            Center(
-              child: Row(
-                children: [
-                  IconButton(onPressed: (){
-                    _launchURL('https://example.com');
-                  }, icon: const Icon(FontAwesomeIcons.twitterSquare)),
-                  IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.github)),
-                  IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.mailchimp)),
-                ],
-              ),
+            //logo icons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      launchURL('https://twitter.com/Vaibhav_Golam');
+                    },
+                    icon: const Icon(FontAwesomeIcons.twitterSquare)),
+                IconButton(
+                    onPressed: () {
+                      launchURL('https://github.com/VaibhavGolam');
+                    },
+                    icon: const Icon(FontAwesomeIcons.githubSquare)),
+                IconButton(
+                    onPressed: () {
+                      launchURL('https://www.linkedin.com/in/vaibhav-golam/');
+                    },
+                    icon: const Icon(FontAwesomeIcons.linkedin)),
+              ],
             )
           ],
         ),
       ),
+
+      //body
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(),
@@ -173,7 +199,8 @@ class ItemListPageState extends State<ItemListPage> {
                                           products[index]['description'],
                                           maxLines: 3,
                                           overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(fontSize: 16.0),
+                                          style:
+                                              const TextStyle(fontSize: 16.0),
                                         ),
                                         const SizedBox(height: 8.0),
                                         Row(
@@ -226,11 +253,10 @@ class ItemListPageState extends State<ItemListPage> {
   }
 
   // Function to open the URL
-  Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+  launchURL(link) async {
+    final Uri url = Uri.parse(link);
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
     }
   }
 }
