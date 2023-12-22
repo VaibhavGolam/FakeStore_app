@@ -1,17 +1,16 @@
 import 'dart:convert';
-import 'package:e_commerce_app/login_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class ItemListPage extends StatefulWidget {
   const ItemListPage({super.key});
 
   @override
-  State<ItemListPage> createState() => _ItemListPageState();
+  ItemListPageState createState() => ItemListPageState();
 }
 
-class _ItemListPageState extends State<ItemListPage> {
+class ItemListPageState extends State<ItemListPage> {
   List<dynamic> products = [];
   bool isLoading = true;
 
@@ -48,37 +47,72 @@ class _ItemListPageState extends State<ItemListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Product List'),
         actions: [
           IconButton(
             onPressed: () {
-              debugPrint('logout button pressed');
-              FirebaseAuth.instance.signOut();
-
-              //goes to login page
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyHomePage()),
-              );
+              // Logout logic goes here
             },
             icon: const Icon(Icons.logout),
-          )
+          ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Hello user!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () {
+                // Logout logic goes here
+              },
+            ),
+            const SizedBox(height: 30),
+            const Divider(
+              color: Colors.grey,
+              thickness: 1,
+              indent: 20,
+              endIndent: 20,
+            ),
+            const Center(
+              child: Text(
+                'Made by Vaibhav Golam',
+              ),
+            ),
+
+            Row(
+              children: [
+                IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.twitter))
+              ],
+            )
+          ],
+        ),
       ),
       body: isLoading
           ? const Center(
-              child: CircularProgressIndicator(), // Show loading indicator
+              child: CircularProgressIndicator(),
             )
           : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                //card view
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        //center text
                         const Center(
                           child: Text(
                             'Welcome to store',
@@ -89,16 +123,10 @@ class _ItemListPageState extends State<ItemListPage> {
                             ),
                           ),
                         ),
-
                         ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          // Disable list's scrolling
-
-                          //number of products
                           itemCount: products.length,
-
-                          // Set the number of cards based on fetched products
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               elevation: 4,
@@ -138,8 +166,7 @@ class _ItemListPageState extends State<ItemListPage> {
                                           products[index]['description'],
                                           maxLines: 3,
                                           overflow: TextOverflow.ellipsis,
-                                          style:
-                                              const TextStyle(fontSize: 16.0),
+                                          style: const TextStyle(fontSize: 16.0),
                                         ),
                                         const SizedBox(height: 8.0),
                                         Row(
@@ -151,12 +178,9 @@ class _ItemListPageState extends State<ItemListPage> {
                                                 const Icon(
                                                   Icons.star,
                                                   color: Colors.yellow,
-                                                  // Change the color as needed
-                                                  size:
-                                                      30, // Adjust the size of the star icon
+                                                  size: 30,
                                                 ),
                                                 const SizedBox(width: 5),
-                                                // Adding some space between the icon and text
                                                 Text(
                                                   products[index]['rating']
                                                           ['rate']
@@ -171,8 +195,9 @@ class _ItemListPageState extends State<ItemListPage> {
                                             Text(
                                               '£ ${products[index]['price']}',
                                               style: const TextStyle(
-                                                  fontSize: 26.0,
-                                                  fontWeight: FontWeight.bold),
+                                                fontSize: 26.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -187,7 +212,7 @@ class _ItemListPageState extends State<ItemListPage> {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
     );
