@@ -65,7 +65,7 @@ class _ItemListPageState extends State<ItemListPage> {
         ],
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(), // Show loading indicator
             )
           : Column(
@@ -92,7 +92,7 @@ class _ItemListPageState extends State<ItemListPage> {
 
                         ListView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           // Disable list's scrolling
 
                           //number of products
@@ -129,13 +129,15 @@ class _ItemListPageState extends State<ItemListPage> {
                                         Text(
                                           products[index]['title'],
                                           style: const TextStyle(
-                                            fontSize: 18.0,
+                                            fontSize: 28.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         const SizedBox(height: 8.0),
                                         Text(
                                           products[index]['description'],
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
                                           style:
                                               const TextStyle(fontSize: 16.0),
                                         ),
