@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class ItemListPage extends StatefulWidget {
   const ItemListPage({super.key});
@@ -93,10 +94,16 @@ class ItemListPageState extends State<ItemListPage> {
               ),
             ),
 
-            Row(
-              children: [
-                IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.twitter))
-              ],
+            Center(
+              child: Row(
+                children: [
+                  IconButton(onPressed: (){
+                    _launchURL('https://example.com');
+                  }, icon: const Icon(FontAwesomeIcons.twitterSquare)),
+                  IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.github)),
+                  IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.mailchimp)),
+                ],
+              ),
             )
           ],
         ),
@@ -216,5 +223,14 @@ class ItemListPageState extends State<ItemListPage> {
               ],
             ),
     );
+  }
+
+  // Function to open the URL
+  Future<void> _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
