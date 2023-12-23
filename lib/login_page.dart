@@ -18,8 +18,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final FirebaseAuthService _auth = FirebaseAuthService();
 
   //controllers
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   //disposing
   @override
