@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSwatch(backgroundColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const LoginPage(),
     );
   }
 }

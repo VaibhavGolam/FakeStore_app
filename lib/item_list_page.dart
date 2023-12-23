@@ -17,6 +17,7 @@ class ItemListPageState extends State<ItemListPage> {
   List<dynamic> products = [];
   bool isLoading = true;
 
+
   @override
   void initState() {
     super.initState();
@@ -78,14 +79,7 @@ class ItemListPageState extends State<ItemListPage> {
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               onTap: () {
-                // Logout logic goes here
-                FirebaseAuth.instance.signOut();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const MyHomePage()), // Replace LoginPage() with your login page
-                );
+                logout();
               },
             ),
 
@@ -258,5 +252,15 @@ class ItemListPageState extends State<ItemListPage> {
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  //logout button
+  void logout() {
+    FirebaseAuth.instance.signOut();
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
   }
 }
