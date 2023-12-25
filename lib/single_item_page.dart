@@ -20,7 +20,7 @@ class _SingleItemPageState extends State<SingleItemPage> {
         child: SingleChildScrollView(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(
                 widget.product['image'],
@@ -83,6 +83,24 @@ class _SingleItemPageState extends State<SingleItemPage> {
                         fontSize: 30, fontWeight: FontWeight.bold)),
               ),
 
+              const SizedBox(
+                height: 15,
+              ),
+
+
+              //product Description heading
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                child: Text(
+                  'Description',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+
               //product description
               Padding(
                 padding:
@@ -114,7 +132,7 @@ class _SingleItemPageState extends State<SingleItemPage> {
                       ),
                     ],
                   ),
-                 const SizedBox(
+                  const SizedBox(
                     width: 30,
                   ),
                   Text(
@@ -124,7 +142,6 @@ class _SingleItemPageState extends State<SingleItemPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   const SizedBox(
                     width: 30,
                   ),
