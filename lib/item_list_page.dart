@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:e_commerce_app/login_page.dart';
+import 'package:e_commerce_app/single_item_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,7 +17,6 @@ class ItemListPage extends StatefulWidget {
 class ItemListPageState extends State<ItemListPage> {
   List<dynamic> products = [];
   bool isLoading = true;
-
 
   @override
   void initState() {
@@ -63,7 +63,7 @@ class ItemListPageState extends State<ItemListPage> {
             //blue drawer header
             const DrawerHeader(
               decoration: BoxDecoration(
-                  color: Colors.blue,
+                color: Colors.blue,
               ),
               child: Text(
                 'Hello user!',
@@ -155,84 +155,96 @@ class ItemListPageState extends State<ItemListPage> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: products.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return Card(
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              margin: const EdgeInsets.all(12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.vertical(
-                                      top: Radius.circular(12.0),
+                            return GestureDetector(
+                              onTap: () {
+                                //goes to the single card page
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SingleItemPage(product: products[index])));
+                                print('Card tapped!');
+                              },
+                              child: Card(
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                margin: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(12.0),
+                                      ),
+                                      child: Image.network(
+                                        products[index]['image'],
+                                        fit: BoxFit.cover,
+                                        height: 250,
+                                        width: double.infinity,
+                                      ),
                                     ),
-                                    child: Image.network(
-                                      products[index]['image'],
-                                      fit: BoxFit.cover,
-                                      height: 250,
-                                      width: double.infinity,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          products[index]['title'],
-                                          style: const TextStyle(
-                                            fontSize: 28.0,
-                                            fontWeight: FontWeight.bold,
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            products[index]['title'],
+                                            style: const TextStyle(
+                                              fontSize: 28.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                          products[index]['description'],
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                          style:
-                                              const TextStyle(fontSize: 16.0),
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.star,
-                                                  color: Colors.yellow,
-                                                  size: 30,
-                                                ),
-                                                const SizedBox(width: 5),
-                                                Text(
-                                                  products[index]['rating']
-                                                          ['rate']
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    fontSize: 26.0,
-                                                    fontWeight: FontWeight.bold,
+                                          const SizedBox(height: 8.0),
+                                          Text(
+                                            products[index]['description'],
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            style:
+                                                const TextStyle(fontSize: 16.0),
+                                          ),
+                                          const SizedBox(height: 8.0),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.star,
+                                                    color: Colors.yellow,
+                                                    size: 30,
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              '£ ${products[index]['price']}',
-                                              style: const TextStyle(
-                                                fontSize: 26.0,
-                                                fontWeight: FontWeight.bold,
+                                                  const SizedBox(width: 5),
+                                                  Text(
+                                                    products[index]['rating']
+                                                            ['rate']
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 26.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                              Text(
+                                                '£ ${products[index]['price']}',
+                                                style: const TextStyle(
+                                                  fontSize: 26.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           },
