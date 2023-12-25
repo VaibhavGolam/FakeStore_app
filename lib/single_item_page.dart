@@ -13,7 +13,9 @@ class _SingleItemPageState extends State<SingleItemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Single product list'), actions: []),
+      appBar: AppBar(title: const Text('Single product list'), actions: [
+        IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart))
+      ]),
       body: Expanded(
         child: SingleChildScrollView(
           child: Column(
@@ -23,7 +25,7 @@ class _SingleItemPageState extends State<SingleItemPage> {
               Image.network(
                 widget.product['image'],
                 fit: BoxFit.cover,
-               height: 250,
+                height: 250,
                 width: double.infinity,
               ),
 
@@ -48,12 +50,18 @@ class _SingleItemPageState extends State<SingleItemPage> {
                       backgroundColor: Colors.blue,
                       shadowColor: Colors.grey[50],
                     ),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Chip(
                       elevation: 4,
                       label: const Text('M'),
                       labelStyle: const TextStyle(color: Colors.white),
                       backgroundColor: Colors.blue,
                       shadowColor: Colors.grey[50],
+                    ),
+                    const SizedBox(
+                      width: 10,
                     ),
                     Chip(
                       elevation: 4,
@@ -87,7 +95,7 @@ class _SingleItemPageState extends State<SingleItemPage> {
 
               //Rating and cost
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Row(
                     children: [
@@ -100,29 +108,54 @@ class _SingleItemPageState extends State<SingleItemPage> {
                       Text(
                         widget.product['rating']['rate'].toString(),
                         style: const TextStyle(
-                          fontSize: 26.0,
+                          fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
+                 const SizedBox(
+                    width: 30,
+                  ),
                   Text(
                     '£ ${widget.product['price'].toString()}',
                     style: const TextStyle(
-                      fontSize: 26.0,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+
+                  const SizedBox(
+                    width: 30,
                   ),
                 ],
               ),
 
-              //add to cart and buy no
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Add to Cart')),
-                  ElevatedButton(onPressed: () {}, child: Text('Buy Now')),
-                ],
+              //add to cart and buy now
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                          shape: BeveledRectangleBorder(),
+                          minimumSize: Size(150, 50),
+                          elevation: 4),
+                      child: const Text('Add to Cart'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        shape: BeveledRectangleBorder(),
+                        minimumSize: Size(150, 50),
+                        elevation: 4,
+                      ),
+                      child: const Text('Buy Now'),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
