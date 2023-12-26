@@ -10,6 +10,8 @@ class SingleItemPage extends StatefulWidget {
 }
 
 class _SingleItemPageState extends State<SingleItemPage> {
+  bool isExpanded = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +89,6 @@ class _SingleItemPageState extends State<SingleItemPage> {
                 height: 15,
               ),
 
-
               //product Description heading
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
@@ -102,13 +103,37 @@ class _SingleItemPageState extends State<SingleItemPage> {
               ),
 
               //product description
+              //product description
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
-                child: Text(widget.product['description'],
-                    style: const TextStyle(
-                      fontSize: 20,
-                    )),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.product['description'],
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                      maxLines: isExpanded ? null : 4,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (widget.product['description'].split('\n').length > 3)
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isExpanded = !isExpanded;
+                          });
+                        },
+                        child: Text(
+                          isExpanded ? 'Show Less' : 'Read More',
+                          style: const TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
 
               //Rating and cost
@@ -150,26 +175,33 @@ class _SingleItemPageState extends State<SingleItemPage> {
 
               //add to cart and buy now
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
                           shape: BeveledRectangleBorder(),
                           minimumSize: Size(150, 50),
-                          elevation: 4),
-                      child: const Text('Add to Cart'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        shape: BeveledRectangleBorder(),
-                        minimumSize: Size(150, 50),
-                        elevation: 4,
+                          elevation: 4,
+                        ),
+                        child: const Text('Add to Cart'),
                       ),
-                      child: const Text('Buy Now'),
+                    ),
+                    const SizedBox(width: 16),
+                    // Adjust the space between buttons
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          shape: BeveledRectangleBorder(),
+                          minimumSize: Size(150, 50),
+                          elevation: 4,
+                        ),
+                        child: const Text('Buy Now'),
+                      ),
                     ),
                   ],
                 ),
