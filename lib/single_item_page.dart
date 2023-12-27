@@ -12,6 +12,21 @@ class SingleItemPage extends StatefulWidget {
 
 class _SingleItemPageState extends State<SingleItemPage> {
   bool isExpanded = false;
+  String categorySet = ' ';
+
+  void categoriesCheck() {
+    if (widget.product['category'].toString() == "electronics") {
+      categorySet = 'electronics';
+    } else if (widget.product['category'].toString() == "jewelery") {
+      categorySet = 'jewelery';
+    } else if (widget.product['category'].toString() == "men's clothing") {
+      categorySet = "men's clothing";
+    } else if (widget.product['category'].toString() == "women's clothing") {
+      categorySet = "women's clothing";
+    } else {
+      categorySet = "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,14 +129,17 @@ class _SingleItemPageState extends State<SingleItemPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ReadMoreText(
-                      widget.product['description'] , style: const TextStyle( fontSize: 18),
+                      widget.product['description'],
+                      style: const TextStyle(fontSize: 18),
                       trimLines: 4,
                       colorClickableText: Colors.blue,
                       trimMode: TrimMode.Line,
                       trimCollapsedText: ' Show more',
                       trimExpandedText: ' Show less',
-                      moreStyle:
-                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue ),
+                      moreStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue),
                     ),
                   ],
                 ),
