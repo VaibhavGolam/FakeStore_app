@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 
 class SingleItemPage extends StatefulWidget {
   final Map<String, dynamic> product;
@@ -16,7 +17,7 @@ class _SingleItemPageState extends State<SingleItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Single product list'), actions: [
-        IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart))
+        IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart))
       ]),
       body: Expanded(
         child: SingleChildScrollView(
@@ -24,11 +25,14 @@ class _SingleItemPageState extends State<SingleItemPage> {
             // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                widget.product['image'],
-                fit: BoxFit.cover,
-                height: 250,
-                width: double.infinity,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.network(
+                  widget.product['image'],
+                  fit: BoxFit.cover,
+                  height: 350,
+                  width: double.infinity,
+                ),
               ),
 
               //divider
@@ -95,7 +99,7 @@ class _SingleItemPageState extends State<SingleItemPage> {
                 child: Text(
                   'Description',
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
@@ -103,74 +107,58 @@ class _SingleItemPageState extends State<SingleItemPage> {
               ),
 
               //product description
-              //product description
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      widget.product['description'],
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                      maxLines: isExpanded ? null : 4,
-                      overflow: TextOverflow.ellipsis,
+                    ReadMoreText(
+                      widget.product['description'] , style: const TextStyle( fontSize: 18),
+                      trimLines: 4,
+                      colorClickableText: Colors.blue,
+                      trimMode: TrimMode.Line,
+                      trimCollapsedText: ' Show more',
+                      trimExpandedText: ' Show less',
+                      moreStyle:
+                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue ),
                     ),
-                    if (widget.product['description'].split('\n').length > 3)
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isExpanded = !isExpanded;
-                          });
-                        },
-                        child: Text(
-                          isExpanded ? 'Show Less' : 'Read More',
-                          style: const TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                   ],
                 ),
               ),
 
               //Rating and cost
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 30,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        widget.product['rating']['rate'].toString(),
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 30,
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Text(
-                    '£ ${widget.product['price'].toString()}',
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                        const SizedBox(width: 5),
+                        Text(
+                          widget.product['rating']['rate'].toString(),
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                ],
+                    Text(
+                      '£ ${widget.product['price'].toString()}',
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               //add to cart and buy now
@@ -183,8 +171,8 @@ class _SingleItemPageState extends State<SingleItemPage> {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          shape: BeveledRectangleBorder(),
-                          minimumSize: Size(150, 50),
+                          shape: const BeveledRectangleBorder(),
+                          minimumSize: const Size(150, 50),
                           elevation: 4,
                         ),
                         child: const Text('Add to Cart'),
@@ -196,8 +184,8 @@ class _SingleItemPageState extends State<SingleItemPage> {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          shape: BeveledRectangleBorder(),
-                          minimumSize: Size(150, 50),
+                          shape: const BeveledRectangleBorder(),
+                          minimumSize: const Size(150, 50),
                           elevation: 4,
                         ),
                         child: const Text('Buy Now'),
