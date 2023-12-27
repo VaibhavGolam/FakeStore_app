@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/cartPage.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 
@@ -15,21 +16,97 @@ class _SingleItemPageState extends State<SingleItemPage> {
   String categorySet = ' ';
 
   void categoriesCheck() {
-    if (widget.product['category'].toString() == "electronics") {
-      categorySet = 'electronics';
-    } else if (widget.product['category'].toString() == "jewelery") {
-      categorySet = 'jewelery';
-    } else if (widget.product['category'].toString() == "men's clothing") {
-      categorySet = "men's clothing";
-    } else if (widget.product['category'].toString() == "women's clothing") {
-      categorySet = "women's clothing";
+    String category = widget.product['category'].toString();
+    if (category == "electronics") {
+      categorySet = "electronics";
+    } else if (category == "jewelery") {
+      categorySet = "jewelery";
+    } else if (category == "men's clothing") {
+      categorySet = "clothing";
+    } else if (category == "women's clothing") {
+      categorySet = "clothing";
     } else {
       categorySet = "";
     }
   }
 
   @override
+  void initState() {
+    super.initState();
+    categoriesCheck();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Widget sizeSelectors() {
+      if (categorySet == "clothing") {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            children: [
+              Chip(
+                elevation: 4,
+                label: const Text('S'),
+                labelStyle: const TextStyle(color: Colors.white),
+                backgroundColor: Colors.blue,
+                shadowColor: Colors.grey[50],
+              ),
+              const SizedBox(width: 10),
+              Chip(
+                elevation: 4,
+                label: const Text('M'),
+                labelStyle: const TextStyle(color: Colors.white),
+                backgroundColor: Colors.blue,
+                shadowColor: Colors.grey[50],
+              ),
+              const SizedBox(width: 10),
+              Chip(
+                elevation: 4,
+                label: const Text('L'),
+                labelStyle: const TextStyle(color: Colors.white),
+                backgroundColor: Colors.blue,
+                shadowColor: Colors.grey[50],
+              ),
+            ],
+          ),
+        );
+      } else if (categorySet == 'electronics') {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            children: [
+              Chip(
+                elevation: 4,
+                label: const Text('32GB'),
+                labelStyle: const TextStyle(color: Colors.white),
+                backgroundColor: Colors.blue,
+                shadowColor: Colors.grey[50],
+              ),
+              const SizedBox(width: 10),
+              Chip(
+                elevation: 4,
+                label: const Text('64GB'),
+                labelStyle: const TextStyle(color: Colors.white),
+                backgroundColor: Colors.blue,
+                shadowColor: Colors.grey[50],
+              ),
+              const SizedBox(width: 10),
+              Chip(
+                elevation: 4,
+                label: const Text('128GB'),
+                labelStyle: const TextStyle(color: Colors.white),
+                backgroundColor: Colors.blue,
+                shadowColor: Colors.grey[50],
+              ),
+            ],
+          ),
+        );
+      } else {
+        // Return an empty container or null if there are no size selectors for other categories
+        return Container();
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text('Single product list'), actions: [
         IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart))
@@ -40,6 +117,7 @@ class _SingleItemPageState extends State<SingleItemPage> {
             // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              //image
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.network(
@@ -60,40 +138,7 @@ class _SingleItemPageState extends State<SingleItemPage> {
               ),
 
               //size selectors
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  children: [
-                    Chip(
-                      elevation: 4,
-                      label: const Text('S'),
-                      labelStyle: const TextStyle(color: Colors.white),
-                      backgroundColor: Colors.blue,
-                      shadowColor: Colors.grey[50],
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Chip(
-                      elevation: 4,
-                      label: const Text('M'),
-                      labelStyle: const TextStyle(color: Colors.white),
-                      backgroundColor: Colors.blue,
-                      shadowColor: Colors.grey[50],
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Chip(
-                      elevation: 4,
-                      label: const Text('L'),
-                      labelStyle: const TextStyle(color: Colors.white),
-                      backgroundColor: Colors.blue,
-                      shadowColor: Colors.grey[50],
-                    ),
-                  ],
-                ),
-              ),
+              if (categorySet != "") sizeSelectors(),
 
               //Product title
               Padding(
@@ -187,7 +232,10 @@ class _SingleItemPageState extends State<SingleItemPage> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          //goes to cart
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> CartPage(product:widget.product) ));
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: const BeveledRectangleBorder(),
                           minimumSize: const Size(150, 50),
@@ -200,7 +248,9 @@ class _SingleItemPageState extends State<SingleItemPage> {
                     // Adjust the space between buttons
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          //payment page
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: const BeveledRectangleBorder(),
                           minimumSize: const Size(150, 50),

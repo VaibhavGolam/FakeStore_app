@@ -162,7 +162,7 @@ class ItemListPageState extends State<ItemListPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            SingleItemPage(product: products[index])));
+                                            SingleItemPage(product: products[index],),),);
                                 print('Card tapped!');
                               },
                               child: Card(
